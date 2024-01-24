@@ -21,9 +21,17 @@ class DomainsController extends Controller
             'contact_us_url' => 'required|url',    
         ]);
 
-        if ($validator->fails())
-        {
-            return response()->json(['errors'=>$validator->errors()->all()]);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+        
+            // Create an array to store errors with field names
+            $responseErrors = [];
+        
+            foreach ($errors->keys() as $field) {
+                $responseErrors[$field] = $errors->get($field);
+            }
+        
+            return response()->json(['errors' => $responseErrors]);
         }
 
         $name = $request->get('name');
