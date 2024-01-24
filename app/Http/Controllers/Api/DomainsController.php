@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Domains;
+use Illuminate\Http\Response;
 
 
 class DomainsController extends Controller
@@ -31,7 +32,7 @@ class DomainsController extends Controller
                 $responseErrors[$field] = $errors->get($field);
             }
         
-            return response()->json(['errors' => $responseErrors]);
+            return response()->json(['errors' => $responseErrors], Response::HTTP_BAD_REQUEST);
         }
 
         $name = $request->get('name');
